@@ -1,0 +1,238 @@
+---
+title: "Platereader"
+output: html_notebook
+---
+
+Setup
+
+```{r}
+rm(list=ls()) #clear workspace
+library(tidyverse)
+library(reshape2)
+library(ggplot2)
+```
+
+
+##Extract rates from growth curves
+
+Example for extracting growth rates from B7 auxotroph 5F01. 
+
+Platereader data was previously imported and matched with metadata. 
+```{r}
+data <- readRDS("data/growthcurves_5F01.RDS")
+
+data <- subset(data, day == "day3")
+
+ggplot(subset(data, strain=="5F01"), aes(x=time, y=value, col=log_dilution, shape=vit, group=well_id))+
+  facet_wrap(dilution~., scales="free_y")+
+  theme_bw(base_size=15)+  
+  geom_line(linewidth=0.5)+
+  scale_y_continuous(trans='log10')+
+  xlab("Time (hrs)")+
+  ylab("OD 600")+
+   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+
+```
+
+Set a time window for each dilution range to extract the linear range. 
+
+For high concentration:
+
+```{r}
+
+#for dilution 1.23e-06 M
+rate_subset <- data %>% subset(time <8) %>% subset(time > 5)
+
+rate_subset <- dcast(rate_subset, time ~ variable, value.var = "log_OD")
+
+x5F01_rate_coeff <- rbind(
+lm(formula = rate_subset$A1 ~ rate_subset$time)$coefficients[2],
+lm(formula = rate_subset$A2 ~ rate_subset$time)$coefficients[2],
+lm(formula = rate_subset$A3 ~ rate_subset$time)$coefficients[2])
+```
+
+For intermediate concentrations:
+```{r}
+rate_subset <- data %>% subset(time <10) %>% subset(time > 7)
+
+rate_subset <- dcast(rate_subset, time ~ variable, value.var = "log_OD")
+
+x5F01_rate_coeff <- rbind(x5F01_rate_coeff,
+lm(formula = rate_subset$B1 ~ rate_subset$time)$coefficients[2], #for dilution 1.23e-07 M
+lm(formula = rate_subset$B2 ~ rate_subset$time)$coefficients[2],
+lm(formula = rate_subset$B3 ~ rate_subset$time)$coefficients[2],
+
+lm(formula = rate_subset$C1 ~ rate_subset$time)$coefficients[2], #for dilution 1.23e-08 M
+lm(formula = rate_subset$C2 ~ rate_subset$time)$coefficients[2],
+lm(formula = rate_subset$C3 ~ rate_subset$time)$coefficients[2],
+
+lm(formula = rate_subset$D1 ~ rate_subset$time)$coefficients[2], #for dilution 1.23e-09 M
+lm(formula = rate_subset$D2 ~ rate_subset$time)$coefficients[2],
+lm(formula = rate_subset$D3 ~ rate_subset$time)$coefficients[2],
+
+lm(formula = rate_subset$E1 ~ rate_subset$time)$coefficients[2], #for dilution 1.23e-10 M
+lm(formula = rate_subset$E2 ~ rate_subset$time)$coefficients[2],
+lm(formula = rate_subset$E3 ~ rate_subset$time)$coefficients[2])
+
+```
+
+For low concentrations:
+
+```{r}
+rate_subset <- data %>% subset(strain=="5F01") %>% subset(time <12) %>% subset(time > 9)
+
+rate_subset <- dcast(rate_subset, time ~ variable, value.var = "log_OD")
+
+x5F01_rate_coeff <- rbind(x5F01_rate_coeff,
+lm(formula = rate_subset$F1 ~ rate_subset$time)$coefficients[2], #for dilution 1.23e-11 M
+lm(formula = rate_subset$F2 ~ rate_subset$time)$coefficients[2],
+lm(formula = rate_subset$F3 ~ rate_subset$time)$coefficients[2],
+                          
+lm(formula = rate_subset$G1 ~ rate_subset$time)$coefficients[2], #for dilution 1.23e-12 M
+lm(formula = rate_subset$G2 ~ rate_subset$time)$coefficients[2],
+lm(formula = rate_subset$G3 ~ rate_subset$time)$coefficients[2],
+
+lm(formula = rate_subset$H1 ~ rate_subset$time)$coefficients[2], #for dilution 0 M
+lm(formula = rate_subset$H2 ~ rate_subset$time)$coefficients[2],
+lm(formula = rate_subset$H3 ~ rate_subset$time)$coefficients[2])
+
+
+```
+
+
+
+Add metadata
+```{r}
+
+well_vector <- as.character(unique(subset(data, strain=="5F01")$variable))
+
+x5F01_rate_coeff <- as.data.frame(cbind(well_vector,x5F01_rate_coeff))
+
+##add vitamin concentrations
+
+x5F01_rate_coeff$dilution <- subset(data, strain=="5F01")[match(well_vector, subset(data, strain=="5F01")$variable),]$dilution
+x5F01_rate_coeff$log_dilution <- log(x5F01_rate_coeff$dilution)
+
+colnames(x5F01_rate_coeff) <- c("variable", "rate", "dilution", "log_dilution")
+
+x5F01_rate_coeff$rate <- as.numeric(x5F01_rate_coeff$rate)
+
+```
+
+
+Plot the growth rates as a function of vitamin concentration
+
+```{r}
+ggplot(x5F01_rate_coeff, aes(x=dilution, y=rate))+
+  theme_bw(base_size=15)+  
+  geom_point(size=1.5)+
+   scale_x_continuous(trans='log10')+
+  ggtitle("5F01, vitamin B7")+
+  xlab("Vitamin conc. (M)")+
+  ylab("Growth rate (1/hr)")+
+   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+
+```
+
+
+##Fig 3 visualization
+
+Plot all rates vs vitamin concentration as in Fig. 3.
+```{r}
+all_rates <- read.table("data/all_rates.txt")
+
+##remove zeros to clean up plot
+
+all_rates <- subset(all_rates, dilution != "0")
+
+colors <- c("#80C87F", #altero
+             "#FEFE99", #flavo
+             "#5CB7FF", #pseudo
+              "#FFCFFD", #rhodo
+              "#BEADD4") #vibrio
+             
+all_rates$strain_amendment <- factor(all_rates$strain_amendment, levels=c("Pse_A2R20_B1","Pse_A2R20_B1-pyrimidine","Fla_E3M18_B1","Rho_B2R09_B3niacin",  "Rho_C2R07_2_B3niacin","Rho_5F01_B7","Alt_C2M19_B7","Alt_B2R08_B12"))
+
+all_rates$auxo <- factor(all_rates$auxo, levels=c("B1","B3","B7","B12"))
+
+ggplot(all_rates, aes(x=dilution, y=rate_norm, fill=order, shape=amendment, group=strain_amendment))+
+  theme_bw(base_size=15)+
+  facet_wrap(auxo~.)+
+stat_summary(fun = "median", geom = "line")+
+  geom_point(size=2)+
+   scale_x_continuous(trans='log10', breaks=c(1e-12,1e-11,1e-10,1e-09,1e-08,1e-07,1e-06,1e-05), labels=c(expression(10^-12),"","",expression(10^-9),"","",expression(10^-6),""))+
+  ggtitle("")+
+  xlab("Vitamin conc. (M)")+
+  ylab("Rate (norm)")+
+  scale_shape_manual(values=c(21,22,23,24,25))+
+  scale_fill_manual(values=colors)+
+   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
+  theme(strip.background =element_rect(fill="white",linewidth=0))
+
+```
+
+```{r}
+ggsave("figures/ratevsvit_norm.pdf", device="pdf", height=4, width=7)
+```
+
+
+Plot measured environmental values.
+
+```{r}
+env_conc <- read.csv("data/vit_quant_from_lit.csv")
+
+env_conc$Mean_Total_M <- as.numeric(env_conc$Mean_Total_M)
+
+env_conc %>% 
+  filter(Mean_Total_M != "NA") %>%
+  group_by(Vitamin) %>%
+  summarize(n=n())
+
+class(env_conc$Mean_Total_M)
+
+ggplot(env_conc, aes(x=Mean_Total_M, y=Vitamin))+
+  theme_bw(base_size=15)+
+  geom_point(alpha=0.1, size=3, shape =15)+
+  scale_x_continuous(trans='log10', limits=c(1e-14,1e-5), breaks=c(1e-14,1e-13,1e-12,1e-11,1e-10,1e-09,1e-08,1e-07,1e-06,1e-05))+
+  ggtitle("")+
+   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+
+
+```
+```{r}
+ggsave("figures/environmental_conc_all.svg", device="svg", height=4, width=4)
+```
+
+
+Extract the estimated km's
+
+```{r}
+library(drc)
+
+# Get unique strain amendments
+unique_strains <- levels(all_rates$strain_amendment)
+
+# Loop through each strain amendment      
+
+for (isolate in unique_strains) {
+
+subset <- all_rates %>% subset(strain_amendment==isolate)
+
+  S<-subset$dilution
+  v<-subset$rate
+
+  kinData <- data.frame(S,v)
+
+  m1 <- drm(v ~ S, data = kinData, fct = MM.2())
+
+  svg(file=paste0("figures/",isolate,"_mmfit.svg"))
+  plot(m1, log = '', pch = 17, main = paste(isolate,"Fitted MM curve"))
+  dev.off()
+
+  sink(paste0("data_deriv/",isolate,"_mmfit.txt"))
+  print(summary(m1))
+  sink()
+}
+
+```
+

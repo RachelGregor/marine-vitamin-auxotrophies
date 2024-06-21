@@ -1,0 +1,14 @@
+
+Model fitted: Michaelis-Menten (2 parms)
+
+Parameter estimates:
+
+                Estimate Std. Error t-value   p-value    
+d:(Intercept) 1.1002e-01 2.9608e-03 37.1592 < 2.2e-16 ***
+e:(Intercept) 2.8073e-11 4.6062e-12  6.0947 7.348e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error:
+
+ 0.008857796 (19 degrees of freedom)

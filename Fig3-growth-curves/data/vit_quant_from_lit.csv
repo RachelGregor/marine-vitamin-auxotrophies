@@ -1,0 +1,212 @@
+﻿Authors,Year,Vitamin,Mean_Total_pM,Mean_Total_M,Depth_max_60m,Location,Type,Link,Notes
+Lewin,1954,B12,7.4,7.4E-12,Not recorded.,,Dissolved,,
+Cowey,1956,B12,8.1,8.1E-12,Not recorded.,,Dissolved,,
+Daisley and Disher,1958,B12,0.37,3.7E-13,20 m,,Dissolved,,
+Vishnias and Riley,1961,B12,8,8E-12,"""Surface""",,Dissolved,,
+Menzel and Spaeth,1962,B12,0.04,4E-14,0 m,,Dissolved,,
+Carlucci and Silbernagel,1966,B12,0.3,3E-13,60 m,,Dissolved,,
+Fiala and Oriol,1984,B12,1.35,1.35E-12,0-20 m,,Dissolved,,
+Okbamichael and Sañudo - Wilhemy,2004,B12,14,1.4E-11,“Surface”,,Dissolved,,
+Sañudo - Wilhelmy et al.,2006,B12,40,4E-11,Not recorded.,,Dissolved,,
+Panzeca et al.,2008,B12,1.3,1.3E-12,“Surface”,,Dissolved,,
+Panzeca et al.,2009,B12,5,5E-12,All other locations than LIS “Deep” were 2 m.,,Dissolved,,
+Koch et al.,2011,B12,5,5E-12,“Near surface”,,Dissolved,,
+Suárez-Suárez et al.,2011,B12,50,5E-11,Not recorded.,,Dissolved,,
+Koch et al.,2012,B12,20,2E-11,<2 m,,Dissolved,,
+Koch et al.,2013,B12,20,2E-11,“low mean water depth”,,Dissolved,,
+Bonnet et al.,2013,B12,3,3E-12,“Surface”,,Dissolved,,
+Heal et al.,2014,B12,5,5E-12,“Surface”,,Dissolved,https://doi.org/10.1002/rcm.7040,
+Heal et al.,2014,B1,1.5,1.5E-12,“Surface”,,Dissolved,https://doi.org/10.1002/rcm.7040,
+Heal et al.,2014,B7,16.9,1.69E-11,“Surface”,,Dissolved,https://doi.org/10.1002/rcm.7040,
+Cohen et al.,2017,B12,0.215,2.15E-13,5 m,,Dissolved,,
+Suffridge et al.,2017,B1,218,2.18E-10,3 m,Eastern Atlantic,Dissolved,https://doi.org/10.3389/fmars.2017.00011, Includes mono and pyrophosphate.
+Suffridge et al.,2017,B1,71.75,7.175E-11,3 m,Eastern Atlantic,Particulate,https://doi.org/10.3389/fmars.2017.00011, Includes mono and pyrophosphate.
+Suffridge et al.,2017,B1_pyr,2.53,2.53E-12,3 m,Eastern Atlantic,Dissolved,https://doi.org/10.3389/fmars.2017.00011,
+Suffridge et al.,2017,B1_pyr,5.91,5.91E-12,3 m,Eastern Atlantic,Particulate,https://doi.org/10.3389/fmars.2017.00011,
+Suffridge et al.,2017,B7,679,6.79E-10,3 m,Eastern Atlantic,Dissolved,https://doi.org/10.3389/fmars.2017.00011,
+Suffridge et al.,2017,B7,8.22,8.22E-12,3 m,Eastern Atlantic,Particulate,https://doi.org/10.3389/fmars.2017.00011,
+Suffridge et al.,2017,B12,19.5,1.95E-11,3 m,Eastern Atlantic,Dissolved,https://doi.org/10.3389/fmars.2017.00011,Total of all forms measured. 
+Suffridge et al.,2017,B12,7.4,7.4E-12,3 m,Eastern Atlantic,Particulate,https://doi.org/10.3389/fmars.2017.00011,Total of all forms measured. 
+Suffridge et al.,2017,B1,587,5.87E-10,50 m,Eastern Atlantic,Dissolved,https://doi.org/10.3389/fmars.2017.00011, Includes mono and pyrophosphate.
+Suffridge et al.,2017,B1,92.03,9.203E-11,50 m,Eastern Atlantic,Particulate,https://doi.org/10.3389/fmars.2017.00011, Includes mono and pyrophosphate.
+Suffridge et al.,2017,B1_pyr,28.3,2.83E-11,50 m,Eastern Atlantic,Dissolved,https://doi.org/10.3389/fmars.2017.00011,
+Suffridge et al.,2017,B1_pyr,21.7,2.17E-11,50 m,Eastern Atlantic,Particulate,https://doi.org/10.3389/fmars.2017.00011,
+Suffridge et al.,2017,B7,629,6.29E-10,50 m,Eastern Atlantic,Dissolved,https://doi.org/10.3389/fmars.2017.00011,
+Suffridge et al.,2017,B7,8.56,8.56E-12,50 m,Eastern Atlantic,Particulate,https://doi.org/10.3389/fmars.2017.00011,
+Suffridge et al.,2017,B12,10.86,1.086E-11,50 m,Eastern Atlantic,Dissolved,https://doi.org/10.3389/fmars.2017.00011,Total of all forms measured. 
+Suffridge et al.,2017,B12,13.68,1.368E-11,50 m,Eastern Atlantic,Particulate,https://doi.org/10.3389/fmars.2017.00011,Total of all forms measured. 
+Suffridge et al.,2017,B1,654.6,6.546E-10,3 m,California coast (SPOT),Dissolved,https://doi.org/10.3389/fmars.2017.00011, Includes mono and pyrophosphate.
+Suffridge et al.,2017,B1_pyr,40.8,4.08E-11,3 m,California coast (SPOT),Dissolved,https://doi.org/10.3389/fmars.2017.00011,
+Suffridge et al.,2017,B7,31.9,3.19E-11,3 m,California coast (SPOT),Dissolved,https://doi.org/10.3389/fmars.2017.00011,
+Suffridge et al.,2017,B12,51.3,5.13E-11,3 m,California coast (SPOT),Dissolved,https://doi.org/10.3389/fmars.2017.00011,Total of all forms measured. 
+Suffridge et al,2018,B1,24.18,2.418E-11,3,Mediterranean Sea-Atlantic Ocean cruise transect (2),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,1.73,1.73E-12,25,Mediterranean Sea-Atlantic Ocean cruise transect (2),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,23.83,2.383E-11,3,Mediterranean Sea-Atlantic Ocean cruise transect (4),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,21.00,2.1E-11,50,Mediterranean Sea-Atlantic Ocean cruise transect (4),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,28.70,2.87E-11,3,Mediterranean Sea-Atlantic Ocean cruise transect (6),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,339.51,3.3951E-10,50,Mediterranean Sea-Atlantic Ocean cruise transect (6),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,242.35,2.4235E-10,3,Mediterranean Sea-Atlantic Ocean cruise transect (9),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,214.56,2.1456E-10,50,Mediterranean Sea-Atlantic Ocean cruise transect (9),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,16.56,1.656E-11,3,Mediterranean Sea-Atlantic Ocean cruise transect (12),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,16.06,1.606E-11,50,Mediterranean Sea-Atlantic Ocean cruise transect (12),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,3.15,3.15E-12,3,Mediterranean Sea-Atlantic Ocean cruise transect (14),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,2.39,2.39E-12,40,Mediterranean Sea-Atlantic Ocean cruise transect (14),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,2.01,2.01E-12,3,Mediterranean Sea-Atlantic Ocean cruise transect (17),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,4.64,4.64E-12,60,Mediterranean Sea-Atlantic Ocean cruise transect (17),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,90.15,9.015E-11,3,Mediterranean Sea-Atlantic Ocean cruise transect (20),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,1.09,1.09E-12,25,Mediterranean Sea-Atlantic Ocean cruise transect (20),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,38.66,3.866E-11,3,Mediterranean Sea-Atlantic Ocean cruise transect (22),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,50.47,5.047E-11,55,Mediterranean Sea-Atlantic Ocean cruise transect (22),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,1.54,1.54E-12,3,Mediterranean Sea-Atlantic Ocean cruise transect (24),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,286.32,2.8632E-10,12,Mediterranean Sea-Atlantic Ocean cruise transect (24),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,41.21,4.121E-11,25,Mediterranean Sea-Atlantic Ocean cruise transect (24),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,27.32,2.732E-11,3,Mediterranean Sea-Atlantic Ocean cruise transect (25),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,16.49,1.649E-11,50,Mediterranean Sea-Atlantic Ocean cruise transect (25),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,21.74,2.174E-11,3,Mediterranean Sea-Atlantic Ocean cruise transect (27),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,28.50,2.85E-11,50,Mediterranean Sea-Atlantic Ocean cruise transect (27),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,218.39,2.1839E-10,3,Mediterranean Sea-Atlantic Ocean cruise transect (28),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,587.09,5.8709E-10,50,Mediterranean Sea-Atlantic Ocean cruise transect (28),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,52.11,5.211E-11,3,Mediterranean Sea-Atlantic Ocean cruise transect (29),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1,39.78,3.978E-11,50,Mediterranean Sea-Atlantic Ocean cruise transect (29),Dissolved,https://doi.org/10.1029/2018JG004554, Includes mono and pyrophosphate.
+Suffridge et al,2018,B1_pyr,4.30,4.3E-12,3,Mediterranean Sea-Atlantic Ocean cruise transect (2),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,0.87,8.7E-13,25,Mediterranean Sea-Atlantic Ocean cruise transect (2),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,1.93,1.93E-12,3,Mediterranean Sea-Atlantic Ocean cruise transect (4),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,0.16,1.6E-13,50,Mediterranean Sea-Atlantic Ocean cruise transect (4),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,3.05,3.05E-12,3,Mediterranean Sea-Atlantic Ocean cruise transect (6),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,1.68,1.68E-12,50,Mediterranean Sea-Atlantic Ocean cruise transect (6),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,6.55,6.55E-12,3,Mediterranean Sea-Atlantic Ocean cruise transect (9),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,6.70,6.7E-12,50,Mediterranean Sea-Atlantic Ocean cruise transect (9),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,0.38,3.8E-13,3,Mediterranean Sea-Atlantic Ocean cruise transect (12),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,0.21,2.1E-13,50,Mediterranean Sea-Atlantic Ocean cruise transect (12),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,1.27,1.27E-12,3,Mediterranean Sea-Atlantic Ocean cruise transect (14),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,0.52,5.2E-13,40,Mediterranean Sea-Atlantic Ocean cruise transect (14),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,2.16,2.16E-12,3,Mediterranean Sea-Atlantic Ocean cruise transect (17),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,1.18,1.18E-12,60,Mediterranean Sea-Atlantic Ocean cruise transect (17),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,10.45,1.045E-11,3,Mediterranean Sea-Atlantic Ocean cruise transect (20),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,3.73,3.73E-12,25,Mediterranean Sea-Atlantic Ocean cruise transect (20),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,6.08,6.08E-12,3,Mediterranean Sea-Atlantic Ocean cruise transect (22),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,1.11,1.11E-12,55,Mediterranean Sea-Atlantic Ocean cruise transect (22),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,2.32,2.32E-12,3,Mediterranean Sea-Atlantic Ocean cruise transect (24),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,12.45,1.245E-11,12,Mediterranean Sea-Atlantic Ocean cruise transect (24),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,2.23,2.23E-12,25,Mediterranean Sea-Atlantic Ocean cruise transect (24),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,2.34,2.34E-12,3,Mediterranean Sea-Atlantic Ocean cruise transect (25),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,0.19,1.9E-13,50,Mediterranean Sea-Atlantic Ocean cruise transect (25),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,1.01,1.01E-12,3,Mediterranean Sea-Atlantic Ocean cruise transect (27),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,2.76,2.76E-12,50,Mediterranean Sea-Atlantic Ocean cruise transect (27),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,2.53,2.53E-12,3,Mediterranean Sea-Atlantic Ocean cruise transect (28),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,28.34,2.834E-11,50,Mediterranean Sea-Atlantic Ocean cruise transect (28),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,NA,NA,3,Mediterranean Sea-Atlantic Ocean cruise transect (29),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B1_pyr,4.24,4.24E-12,50,Mediterranean Sea-Atlantic Ocean cruise transect (29),Dissolved,https://doi.org/10.1029/2018JG004554,4-amino-5-hydroxymethyl-2-methylpyrimidine
+Suffridge et al,2018,B7,132.96,1.3296E-10,3,Mediterranean Sea-Atlantic Ocean cruise transect (2),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,210.73,2.1073E-10,25,Mediterranean Sea-Atlantic Ocean cruise transect (2),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,115.32,1.1532E-10,3,Mediterranean Sea-Atlantic Ocean cruise transect (4),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,NA,NA,50,Mediterranean Sea-Atlantic Ocean cruise transect (4),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,28.76,2.876E-11,3,Mediterranean Sea-Atlantic Ocean cruise transect (6),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,870.95,8.7095E-10,50,Mediterranean Sea-Atlantic Ocean cruise transect (6),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,1953.10,1.9531E-09,3,Mediterranean Sea-Atlantic Ocean cruise transect (9),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,201.29,2.0129E-10,50,Mediterranean Sea-Atlantic Ocean cruise transect (9),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,70.63,7.063E-11,3,Mediterranean Sea-Atlantic Ocean cruise transect (12),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,139.57,1.3957E-10,50,Mediterranean Sea-Atlantic Ocean cruise transect (12),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,155.49,1.5549E-10,3,Mediterranean Sea-Atlantic Ocean cruise transect (14),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,195.87,1.9587E-10,40,Mediterranean Sea-Atlantic Ocean cruise transect (14),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,188.56,1.8856E-10,3,Mediterranean Sea-Atlantic Ocean cruise transect (17),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,625.64,6.2564E-10,60,Mediterranean Sea-Atlantic Ocean cruise transect (17),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,142.29,1.4229E-10,3,Mediterranean Sea-Atlantic Ocean cruise transect (20),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,155.60,1.556E-10,25,Mediterranean Sea-Atlantic Ocean cruise transect (20),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,433.94,4.3394E-10,3,Mediterranean Sea-Atlantic Ocean cruise transect (22),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,136.75,1.3675E-10,55,Mediterranean Sea-Atlantic Ocean cruise transect (22),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,78.53,7.853E-11,3,Mediterranean Sea-Atlantic Ocean cruise transect (24),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,554.11,5.5411E-10,12,Mediterranean Sea-Atlantic Ocean cruise transect (24),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,178.62,1.7862E-10,25,Mediterranean Sea-Atlantic Ocean cruise transect (24),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,48.54,4.854E-11,3,Mediterranean Sea-Atlantic Ocean cruise transect (25),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,NA,NA,50,Mediterranean Sea-Atlantic Ocean cruise transect (25),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,122.41,1.2241E-10,3,Mediterranean Sea-Atlantic Ocean cruise transect (27),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,109.97,1.0997E-10,50,Mediterranean Sea-Atlantic Ocean cruise transect (27),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,679.43,6.7943E-10,3,Mediterranean Sea-Atlantic Ocean cruise transect (28),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,628.88,6.2888E-10,50,Mediterranean Sea-Atlantic Ocean cruise transect (28),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,59.24,5.924E-11,3,Mediterranean Sea-Atlantic Ocean cruise transect (29),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B7,133.45,1.3345E-10,50,Mediterranean Sea-Atlantic Ocean cruise transect (29),Dissolved,https://doi.org/10.1029/2018JG004554,
+Suffridge et al,2018,B12,2.13,2.13E-12,3,Mediterranean Sea-Atlantic Ocean cruise transect (2),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,4.93,4.93E-12,25,Mediterranean Sea-Atlantic Ocean cruise transect (2),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,1.75,1.75E-12,3,Mediterranean Sea-Atlantic Ocean cruise transect (4),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,0.93,9.3E-13,50,Mediterranean Sea-Atlantic Ocean cruise transect (4),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,0.93,9.3E-13,3,Mediterranean Sea-Atlantic Ocean cruise transect (6),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,10.71,1.071E-11,50,Mediterranean Sea-Atlantic Ocean cruise transect (6),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,4.30,4.3E-12,3,Mediterranean Sea-Atlantic Ocean cruise transect (9),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,4.95,4.95E-12,50,Mediterranean Sea-Atlantic Ocean cruise transect (9),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,0.62,6.2E-13,3,Mediterranean Sea-Atlantic Ocean cruise transect (12),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,0.86,8.6E-13,50,Mediterranean Sea-Atlantic Ocean cruise transect (12),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,2.10,2.1E-12,3,Mediterranean Sea-Atlantic Ocean cruise transect (14),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,2.50,2.5E-12,40,Mediterranean Sea-Atlantic Ocean cruise transect (14),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,2.00,2E-12,3,Mediterranean Sea-Atlantic Ocean cruise transect (17),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,0.97,9.7E-13,60,Mediterranean Sea-Atlantic Ocean cruise transect (17),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,2.06,2.06E-12,3,Mediterranean Sea-Atlantic Ocean cruise transect (20),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,3.37,3.37E-12,25,Mediterranean Sea-Atlantic Ocean cruise transect (20),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,7.23,7.23E-12,3,Mediterranean Sea-Atlantic Ocean cruise transect (22),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,1.98,1.98E-12,55,Mediterranean Sea-Atlantic Ocean cruise transect (22),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,1.60,1.6E-12,3,Mediterranean Sea-Atlantic Ocean cruise transect (24),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,10.41,1.041E-11,12,Mediterranean Sea-Atlantic Ocean cruise transect (24),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,2.03,2.03E-12,25,Mediterranean Sea-Atlantic Ocean cruise transect (24),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,1.47,1.47E-12,3,Mediterranean Sea-Atlantic Ocean cruise transect (25),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,0.41,4.1E-13,50,Mediterranean Sea-Atlantic Ocean cruise transect (25),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,0.76,7.6E-13,3,Mediterranean Sea-Atlantic Ocean cruise transect (27),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,1.65,1.65E-12,50,Mediterranean Sea-Atlantic Ocean cruise transect (27),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,19.54,1.954E-11,3,Mediterranean Sea-Atlantic Ocean cruise transect (28),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,10.87,1.087E-11,50,Mediterranean Sea-Atlantic Ocean cruise transect (28),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,0.66,6.6E-13,3,Mediterranean Sea-Atlantic Ocean cruise transect (29),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Suffridge et al,2018,B12,2.14,2.14E-12,50,Mediterranean Sea-Atlantic Ocean cruise transect (29),Dissolved,https://doi.org/10.1029/2018JG004554,Total of all forms measured. 
+Joglar et al.,2020,B12,0.3,3E-13,“Surface”,,Dissolved,,
+Joglar et al.,2021,B12,0.15,1.5E-13,"Mesocosm experiment, only day 0 from August reported here.",,Dissolved,,
+Barber-Lluch et al.,2021,B12,0.5,5E-13,“Surface”,,Dissolved,,
+Mӧller et al.,2022,B12,1,1E-12,10 m and “surface water”,,Dissolved,,
+Johnson et al,2022,B7,0.3,3E-13,,Western Atlantic,Particulate,https://doi.org/10.1002/lno.12275,
+Johnson et al,2022,B9,0.5,5E-13,,Western Atlantic,Particulate,https://doi.org/10.1002/lno.12275,
+Johnson et al,2022,B9,32,3.2E-11,,Western Atlantic,Dissolved,https://doi.org/10.1002/lno.12275,PABA.
+Johnson et al,2022,B7,13,1.3E-11,,Western Atlantic,Dissolved,https://doi.org/10.1002/lno.12275,
+Johnson et al,2022,B3,56,5.6E-11,,Western Atlantic,Dissolved,https://doi.org/10.1002/lno.12275,NAD.
+Bruns et al.,2022,B1,27,2.7E-11,Not recorded.,North Sea,Dissolved,,
+Bruns et al.,2022,B3,46,4.6E-11,Not recorded.,North Sea,Dissolved,,
+Bruns et al.,2022,B7,30,3E-11,Not recorded.,North Sea,Dissolved,,
+Bruns et al.,2022,B12,16,1.6E-11,Not recorded.,North Sea,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B1,33,3.3E-11,4,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B1,58,5.8E-11,20,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B1,4,4E-12,4,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B1,18,1.8E-11,40,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B1,4,4E-12,4,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B1,116,1.16E-10,20,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B1,314,3.14E-10,30,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B1,53,5.3E-11,60,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B1,0.34,3.4E-13,10,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B1,44,4.4E-11,60,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B1,6.8,6.8E-12,4,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B1,69,6.9E-11,50,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B1,16,1.6E-11,4,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B1,23,2.3E-11,50,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B7,NA,NA,4,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B7,NA,NA,20,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B7,NA,NA,4,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B7,NA,NA,40,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B7,NA,NA,4,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B7,NA,NA,20,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B7,125,1.25E-10,30,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B7,82,8.2E-11,60,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B7,0.51,5.1E-13,10,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B7,4.2,4.2E-12,60,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B7,NA,NA,4,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B7,NA,NA,50,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B7,NA,NA,4,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B7,33,3.3E-11,50,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B12,1.6,1.6E-12,4,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B12,3.2,3.2E-12,20,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B12,14,1.4E-11,4,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B12,13,1.3E-11,40,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B12,14,1.4E-11,4,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B12,1.7,1.7E-12,20,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B12,NA,NA,30,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B12,NA,NA,60,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B12,NA,NA,10,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B12,NA,NA,60,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B12,5.3,5.3E-12,4,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B12,0.89,8.9E-13,50,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B12,NA,NA,4,California coast,Dissolved,,
+Sañudo- Wilhelmy et al.,2012,B12,NA,NA,50,California coast,Dissolved,,
