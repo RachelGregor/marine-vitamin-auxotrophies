@@ -1,0 +1,529 @@
+---
+title: "Vitamin genes"
+output: html_notebook
+---
+
+Set up
+```{r}
+rm(list=ls()) #clear workspace
+
+library(tidyverse)
+library(reshape2)
+library(ggplot2)
+library(tidytree)
+library(dplyr)
+library(ggtree)
+library(ggtreeExtra)
+library(ggnewscale) 
+```
+
+##Open files
+load results of eggnog workflow 
+
+```{r}
+genes_list <- read.csv("data/vitamin-ECs-Jan2023.csv")
+
+sensitive <- read.csv("data/metadata_sensitive_strains.csv")
+
+phylo <- read.csv("data/taxonomy-151strains.csv", row.names = 1)
+
+tree <-read.tree("data/prunedGenomes.tree")
+
+tree <- drop.tip(tree, "13B01") ##removing one missing genome, 13B01
+
+phylo <- phylo[match(tree$tip.label, phylo$taxa),] ##now match the tax order to the tree, as well as drop the missing taxa temporarily
+
+
+```
+
+Melt auxotrophy metadata
+```{r}
+sens.melt <- melt(sensitive,measure.vars = c("auxo_1", "auxo_2", "auxo_3", "auxo_4"))
+
+sens.melt <-sens.melt[!sens.melt$value=="", ]
+
+```
+
+##Fig 2a- Rhodobacterales B1 genes
+
+Load gene table
+```{r}
+eggnog <- readRDS("data/vitamin-annotations-eggnog-genetable-Aug2023.RDS")
+```
+
+For B1:
+```{r}
+vit <- "Thiamine"
+vit_B <- "B1"
+steps <- c("Thiazole","Thiazole_eukaryotic", "Pyrimidine","Coupling")
+```
+
+Subset to Rhodobacterales
+```{r}
+ordername <- "Rhodobacterales"
+
+subset <- subset(phylo, order==ordername) #select a specific order of interest
+```
+
+Visualize B1 genes
+```{r}
+genes_subset <- t(eggnog[match(subset$taxa,rownames(eggnog)),]) #subset the gene matrix to only Rhodobacterales
+
+genes_subset[genes_subset<1] <-NA ##convert 0 to NA
+
+genes_list_subset <- genes_list[match(rownames(genes_subset), genes_list$Abbreviation),]
+
+genes_subset <- as.data.frame(cbind("Vitamin"=genes_list_subset$Vitamin, "Gene"=genes_list_subset$Abbreviation, "Function"=genes_list_subset$Function, "EC"=genes_list_subset$EC, genes_subset)) ##add in some metadata
+
+genes_melt <-melt(genes_subset, na.rm=T, id.vars=c("Vitamin","EC","Function", "Gene"))
+
+
+genes_vit <- subset(genes_subset, Vitamin==vit)
+
+##Create a categorical matrix
+genes_vit.m <- melt(genes_vit, id.vars=c("Vitamin", "Gene", "Function", "EC"))
+genes_vit.m <- na.omit(genes_vit.m) 
+
+genes_vit.cat <- dcast(genes_vit.m, variable ~ Gene, value.var= "Function" )
+rownames(genes_vit.cat) <- genes_vit.cat[,1]
+genes_vit.cat <- genes_vit.cat[,-1]
+
+##Match the order to the function using the steps vector  defined above
+genes_vit <- genes_vit[genes_vit$Gene %in% colnames(genes_vit.cat),] ##first match genes relevant for this vitamin
+
+genes_vit$Function <- factor(genes_vit$Function, levels=steps)
+
+genes_vit <- genes_vit[order(genes_vit$Function),] ##order metadata by levels
+genes_vit.cat <- genes_vit.cat[,genes_vit$Gene] ##order columns in the matrix in the same order
+
+
+
+##Create a corresponding list of B1 sensitive strains
+sensitive_subset <- sens.melt[sens.melt$strains %in% subset$taxa,]
+sensitive_subset <- subset(sensitive_subset, value==vit_B)
+
+#Make tree for this subset of taxa
+pruned.tree2 <-drop.tip(tree, setdiff(tree$tip.label, subset$taxa))
+##make groupings based on list of B1 auxo and non auxo
+pruned.tree2 <- groupOTU(pruned.tree2, list(auxotrophy = sensitive_subset$strains))
+
+```
+
+
+make the plot
+```{r}
+p <- ggtree(pruned.tree2, aes(color=group)) + geom_tiplab(aes(color=group),size=3)+
+     scale_color_manual(values = c("black", "red"))+
+    geom_treescale(x=0, y=0, width=0.1)+
+  ggtitle(paste0(ordername,", ",vit," (",vit_B, ") auxotrophy"))
+
+p1 <- p+ new_scale_fill()
+
+#subset the matrix to focus on key genes in B1 pathway
+keygenes_vit.cat <- genes_vit.cat[,colnames(genes_vit.cat) %in% c("thiC","thiG","thiE")]
+
+gheatmap(p1, keygenes_vit.cat, offset=0.1, width=1, font.size=2, 
+        colnames_angle=0, hjust=0.5,colnames_position="top", legend_title="Function", colnames_offset_y = 0.1)+
+  scale_fill_manual(values=c("darkblue","lightblue","dodgerblue3"),na.value="white")
+
+```
+
+
+
+##Predict auxotrophies based on genomes
+
+load files 
+```{r}
+eggnog <- readRDS("data/vitamin-annotations-eggnog-genetable-Aug2023.RDS")
+
+##B12 annotations are based on expanded list of ECs
+eggnog_B12 <- readRDS("data/vitamin-annotations-eggnog-EC-B12-gene-table-Sept2023.RDS")
+```
+
+
+Find vitamin related genes
+```{r}
+genes_subset <- t(eggnog) #subset the gene matrix to only those taxa
+
+#genes_subset[genes_subset<1] <-NA ##convert 0 to NA
+
+genes_list_subset <- genes_list[match(rownames(genes_subset), genes_list$Abbreviation),]
+
+genes_subset <- as.data.frame(cbind("Vitamin"=genes_list_subset$Vitamin, "Gene"=genes_list_subset$Abbreviation, "Function"=genes_list_subset$Function, "EC"=genes_list_subset$EC, genes_subset)) ##add in some metadata
+
+genes_melt <-melt(genes_subset, na.rm=T, id.vars=c("Vitamin","EC","Function", "Gene"))
+
+```
+
+
+List of vitamins and their corresponding B numbers and steps
+```{r}
+vitamins <- list(
+  list(name = "Thiamine", code = "B1", steps = c("Thiazole", "Thiazole_eukaryotic", "Pyrimidine", "Coupling")),
+  list(name = "Niacin", code = "B3", steps = c("Aspartate", "Kynurenine", "Nicotinamide", "NAD")),
+  list(name = "Biotin", code = "B7", steps = c("Pimelate", "Bicyclic_rings")),
+  list(name = "Folate", code = "B9", steps = c("PABA", "Pterin", "Condensation", "Reductase")),
+  list(name = "Cobalamin", code = "B12", steps = c("Corrin", "Ligands", "Methionine"))
+)
+```
+
+Find vitamin genes in eggnog annotations
+```{r}
+# Create a list to store the resulting dataframes
+result_dataframes <- list()
+
+# Loop through the list of vitamins
+for (vitamin in vitamins) {
+  vit <- vitamin$name
+  vit_B <- vitamin$code
+  steps <- vitamin$steps
+  
+  # Subset the data for the current vitamin
+  genes_vit <- subset(genes_subset, Vitamin == vit)
+  rownames(genes_vit) <- genes_vit$Gene
+  genes_vit <- t(genes_vit[, -c(1:4)])
+  mode(genes_vit) <- "numeric"
+  genes_vit[genes_vit > 1] <- 1
+  genes_vit <- as.data.frame(genes_vit)
+  
+  # Store the dataframe in the result list
+  result_dataframes[[vit_B]] <- genes_vit
+  
+  rm(vitamin, steps, vit, vit_B)
+}
+
+# result_dataframes now contains five separate dataframes (genesB1, genesB3, genesB7, genesB9, genesB12)
+
+eggnog_B12[eggnog_B12 > 1] <- 1
+
+result_dataframes$B12 <- eggnog_B12
+
+```
+
+Make the dataframe for the analysis
+```{r}
+##Make a list of the experimental results for auxotrophies for each vitamin
+##Insert 1s for prototrophs and 0s for auxotrophs. 
+panel <- dcast(sens.melt, strains ~ value, fill=1)
+
+vits <-panel %>%
+  select(B1, B3, B7, B9, B12) %>%
+  mutate_all(as.numeric)
+
+panel <- cbind(taxa =panel$strains, vits)
+
+panel[is.na(panel)] = 0
+
+##now add in the prototrophs
+
+phylo_proto <- phylo[!phylo$taxa %in% panel$taxa,]
+
+proto <- cbind(taxa=phylo_proto$taxa, B1= 1, B3 =1, B7= 1, B9=1, B12=1)
+
+predictions <- rbind(panel, proto)
+predictions$B1 <- as.numeric(predictions$B1)
+predictions$B3 <- as.numeric(predictions$B3)
+predictions$B7 <- as.numeric(predictions$B7)
+predictions$B9 <- as.numeric(predictions$B9)
+predictions$B12 <- as.numeric(predictions$B12)
+```
+
+
+figure out the filtering
+the lists of genes here are based on: Systematic genome assessment of B-vitamin biosynthesis suggests co-operation among gut microbes
+
+
+
+Predict B1 prototrophs
+Condition is thiC + [thiG or thi4] + [thiE or thiN] 
+Reference: "Prevalent reliance of bacterioplankton on exogenous vitamin B1 and precursor availability", Paerl et al, PNAS, 2018 https://doi.org/10.1073/pnas.1806425115
+
+```{r}
+#predict prototrophs
+protoB1 <- result_dataframes$B1 %>% filter(thiC == 1, thiG==1, (thiE == 1 | thiE2 == 1|thiN == 1))
+
+
+B1_list <- cbind(rownames(protoB1), "1")
+colnames(B1_list) <- c("taxa","predictedB1")
+
+predictions <- merge(predictions, B1_list, by="taxa", all=T)
+
+```
+
+Predict B3 prototrophs
+
+Reference: "Systematic genome assessment of B-vitamin biosynthesis suggests co-operation among gut microbes", Magnusdottir et al, Front. Genet., 2015
+
+Genes:
+ASPOX + QSYN + QAPRT + NaMNAT + NADS, which is equivalent to [[(nadX or nadB) + nadA] + nadC + nadD + nadE
+
+kmo gene added as representative gene from kynurenine pathway for quinolinate biosynthesis via tryptophan, present in Flavobacteriales. Reference: "NAD biosynthesis evolution in bacteria: lateral gene transfer of kynurenine pathway in Xanthomonadales and Flavobacteriales," Lima et al, Mol. Biol. Evol., 2009. 
+
+Final condition:
+[[(nadX or nadB) + nadA] or [kmo]] + nadC + nadD + nadE
+
+```{r}
+
+protoB3 <- result_dataframes$B3 %>% filter(nadC ==1 & nadD==1 & nadE ==1) %>% filter(((nadB == 1 | nadX==1) & nadA ==1) | kmo == 1) 
+
+B3_list <- cbind(rownames(protoB3), "1")
+colnames(B3_list) <- c("taxa","predictedB3")
+
+predictions <- merge(predictions, B3_list, by="taxa", all=T)
+
+```
+
+
+Predict B7 prototrophs
+
+Reference: The overlooked role of a biotin precursor for marine bacteria - desthiobiotin as an escape route for biotin auxotrophy," Wienhausen et al, ISME J, 2022. doi:10.1038/s41396-022-01304-w
+
+Condition is: bioF+bioA+bioD+bioB
+
+
+```{r}
+
+protoB7 <- result_dataframes$B7 %>% filter(bioF + bioF2 + bioF2_3 >=1) %>% filter(bioA ==1 & bioD==1 & bioB ==1)
+
+B7_list <- cbind(rownames(protoB7), "1")
+colnames(B7_list) <- c("taxa","predictedB7")
+
+predictions <- merge(predictions, B7_list, by="taxa", all=T)
+
+
+```
+
+Predict B9 prototrophs
+
+Reference: Comparative genomics of bacterial and plant folate synthesis and salvage: predictions and validations, de Crécy-Lagard et al, BMC Genomics, 2007. 
+
+FolK+FolP
+
+```{r}
+
+
+protoB9 <- result_dataframes$B9 %>% filter(folK == 1 & folP == 1)
+
+
+B9_list <- cbind(rownames(protoB9), "1")
+colnames(B9_list) <- c("taxa","predictedB9")
+
+predictions <- merge(predictions, B9_list, by="taxa", all=T)
+
+```
+
+Predict B12 prototrophs
+
+Condition is detailed below in code. B12 producers were predicted based on very likely cobamide producers containing all 23 aerobic genes, as well as likely cobamide producers containing ≥4/5 tetrapyrrole precursor biosynthesis steps and ≥90% aerobic steps. While genes from the anaerobic pathway of B12 biosynthesis were checked as well, this pathway did not add any additional predicted producers. 
+
+Reference: "Uneven distribution of cobamide biosynthesis and dependence in bacteria predicted by comparative genomics", Shelton et al, ISME J, 2019.
+
+
+```{r}
+
+##aerobic pathway, full pathway - 23 hits
+protoB12aero <- result_dataframes$B12 %>% 
+  filter(`2.3.1.37` == 1 | `1.2.1.70` ==1 & `5.4.3.8` ==1) %>% ##ALA synthesis
+  filter(`4.2.1.24` == 1 & `2.5.1.61` == 1 & `4.2.1.75` == 1 & `2.1.1.107` ==1) %>% ##other 4 tetrapyrrole steps
+  filter(`2.1.1.130` == 1 & `1.14.13.83` == 1 & `2.1.1.131` == 1 & `2.1.1.133` == 1 & `2.1.1.152` == 1 & `1.3.1.54` == 1 & `2.1.1.132` == 1 & `5.4.99.61` ==1 & `6.3.5.9` == 1 & `6.6.1.2` == 1) %>%
+  filter(`2.5.1.17` ==1 & `6.3.5.10` == 1 & `6.3.1.10` == 1 & `2.7.1.156` == 1 & `2.7.7.62` == 1 & `3.1.3.73` == 1 & `2.7.8.26` == 1)
+
+##anaerobic pathway, full pathway - 0 
+protoB12ana <- result_dataframes$B12 %>% 
+  filter(`2.3.1.37` == 1 | `1.2.1.70` ==1 & `5.4.3.8` ==1) %>% ##ALA synthesis
+  filter(`4.2.1.24` == 1 & `2.5.1.61` == 1 & `4.2.1.75` == 1 & `2.1.1.107` ==1) %>% 
+  filter(`1.3.1.76` == 1 & `4.99.1.3` == 1 & `2.1.1.151` == 1 & `2.1.1.131` == 1 & `2.1.1.271` == 1 & `3.7.1.12` == 1 & `2.1.1.195` == 1 & `1.3.1.106` ==1 & `2.1.1.196` == 1 & `2.1.1.289` == 1 & `5.4.99.60` == 1 & `6.3.5.11` == 1) %>%
+  filter(`2.5.1.17` ==1 & `6.3.5.10` == 1 & `6.3.1.10` == 1 & `2.7.1.156` == 1 & `2.7.7.62` == 1 & `3.1.3.73` == 1 & `2.7.8.26` == 1)
+
+##condition for likely B12 producers: 4/5 tetrapyrrole steps (all genomes meet this condition), and 90% of either aero or ana steps
+
+##all but B2M13 has ALA synthesis, and all genomes have the other 4 steps, so they meet those conditions
+
+tetrapyr <- result_dataframes$B12[,colnames(result_dataframes$B12) %in% c("4.2.1.24","2.5.1.61","4.2.1.75","2.1.1.107")]
+
+range(rowSums(tetrapyr)) ##all have 4/4
+
+##90% of remaining aerobic genes = 15/17
+
+aero_EC <- c("2.1.1.130", "1.14.13.83", "2.1.1.131","2.1.1.133","2.1.1.152","1.3.1.54","2.1.1.132","5.4.99.61","6.3.5.9", "6.6.1.2","2.5.1.17","6.3.5.10","6.3.1.10","2.7.1.156","2.7.7.62","3.1.3.73","2.7.8.26")
+
+aero <- result_dataframes$B12[,colnames(result_dataframes$B12) %in% aero_EC]
+
+likelyB12aero <- rownames(aero[rowSums(aero) > 14,])
+
+#90% of ana genes = 17/19 
+
+ana_EC <- c("1.3.1.76","4.99.1.3","2.1.1.151","2.1.1.131","2.1.1.271","3.7.1.12","2.1.1.195","1.3.1.106", "2.1.1.196","2.1.1.289","5.4.99.60","6.3.5.11","2.5.1.17","6.3.5.10","6.3.1.10","2.7.1.156","2.7.7.62","3.1.3.73","2.7.8.26")
+
+ana <- result_dataframes$B12[,colnames(result_dataframes$B12) %in% ana_EC]
+
+likelyB12ana <- rownames(ana[rowSums(ana) > 16,])
+
+setdiff(likelyB12ana,likelyB12aero) ##all likely ana are in aero set
+
+likelyB12aero
+
+
+##in total, there are 23 isolates with the full pathway, and 11 additional isolates that are likely producers
+
+B12_list <- cbind(likelyB12aero, "1")
+colnames(B12_list) <- c("taxa","predictedB12")
+
+predictions <- merge(predictions, B12_list, by="taxa", all=T)
+
+
+```
+
+
+
+```{r}
+predictions[is.na(predictions)] = 0
+
+write.csv(predictions, "data_deriv/predictions.csv")
+```
+
+```{r}
+predictions <- read.csv("data_deriv/predictions.csv", row.names = 1)
+
+predictions$predictedphenotype <- rowSums(predictions[,c("predictedB1","predictedB3","predictedB7","predictedB9","predictedB12")])
+##all the 5's have all pathways, all the 4's have the four pathways but not B12. this is just the case here specifically. anyway it means i don't have to make a separate prediction
+
+predictions$predictedphenotype <- replace(predictions$predictedphenotype, predictions$predictedphenotype <= 3,0)
+predictions$predictedphenotype <- replace(predictions$predictedphenotype, predictions$predictedphenotype >= 4,1)
+
+predictions$phenotype <- rowSums(predictions[,c("B1","B3","B7","B9","B12")])
+
+
+
+predictions$phenotype <- replace(predictions$phenotype, predictions$phenotype < 5,0)
+predictions$phenotype <- replace(predictions$phenotype, predictions$phenotype == 5,1)
+
+rownames(predictions) <- predictions$taxa
+
+predictions <- predictions[,2:ncol(predictions)]
+
+colnames(predictions)
+
+predictions <- predictions[, c("predictedphenotype","phenotype",
+                               "predictedB1","B1",
+                               "predictedB3","B3",
+                               "predictedB7","B7",
+                               "predictedB9","B9",
+                               "predictedB12","B12")]
+
+
+predictions <- predictions[match(rev(phylo$taxa), rownames(predictions)),] 
+
+#write.csv(predictions, "data_deriv/predictions_binary.csv")
+
+```
+0 = auxotroph, 1 = prototroph
+Where are the predictions in correct?
+```{r}
+
+table(predictions$predictedphenotype-predictions$phenotype)
+# interpretation:0 means prediction matches phenotype. 
+#-1 means auxotroph was predicted and it's not. 
+#1 means auxotroph was not predicted but it was one.
+table(predictions$predictedphenotype+predictions$phenotype)
+# interpretation:0 means it was an auxo and predicted to be one. 
+# 1 means prediction didn't match reality. 
+# 2 means protroph was predicted and it was one.
+
+```
+For which vitamin are predictions incorrect?
+```{r}
+
+#split into two matrices
+geno <- predictions[,c("predictedB1","predictedB3","predictedB7","predictedB9","predictedB12")]
+
+pheno <- predictions[,c("B1","B3","B7","B9","B12")]
+
+predplus <- geno+pheno
+predmin <- geno-pheno
+
+
+# Count occurrences in predplus and predmin for each column
+count_predplus <- rbind(cbind(vit="B1",as.data.frame(table(predplus$predictedB1))),
+cbind(vit="B3",as.data.frame(table(predplus$predictedB3))),
+cbind(vit="B7",as.data.frame(table(predplus$predictedB7))),
+cbind(vit="B9",as.data.frame(table(predplus$predictedB9))),
+cbind(vit="B12",as.data.frame(table(predplus$predictedB12))))
+
+##keep counts for 0 (true auxo) and 2 (true proto), so drop 1
+
+count_predplus <- subset(count_predplus, !Var1 == "1")
+
+
+count_predmin <- rbind(cbind(vit="B1",as.data.frame(table(predmin$predictedB1))),
+cbind(vit="B3",as.data.frame(table(predmin$predictedB3))),
+cbind(vit="B7",as.data.frame(table(predmin$predictedB7))),
+cbind(vit="B9",as.data.frame(table(predmin$predictedB9))),
+cbind(vit="B12",as.data.frame(table(predmin$predictedB12))))
+
+##keep counts for -1  and 1, so drop 0
+
+count_predmin <- subset(count_predmin, !Var1 == "0")
+
+counts <- rbind(count_predmin, count_predplus)
+
+prediction_key <- read.csv("data/prediction_key.csv")
+
+counts <- merge(prediction_key,counts, by.x="code",by.y="Var1")
+
+counts$geno_pheno <- paste0(counts$genotype,"_",counts$phenotype)
+
+write.csv(counts, "data_deriv/summary_pred_vs_real.csv")
+```
+
+##Figure S4: Phenotype-genotype matching based on presence/absence of key genes
+```{r}
+
+colors <- c("#80C87F","#919191","#FCC086","#FEFE99","#376BB0","#5CB7FF","#FFCFFD","#BEADD4")
+
+p <- ggtree(tree)+geom_treescale()+
+  geom_fruit(
+          data=phylo,
+          geom=geom_point,
+          mapping=aes(y=taxa, color=order),
+          position="identity"
+          )+ scale_color_manual(values=colors)
+p
+
+p1 <- p+ new_scale_fill()
+ 
+
+##Create a categorical matrix for the heatmap
+geno_char <- geno
+geno_char[geno_char>0] <-NA
+geno_char[geno_char<1] <-"predicted_auxotroph"
+
+pheno_char <- pheno
+pheno_char[pheno_char>0] <-NA
+pheno_char[pheno_char<1] <-"auxotroph"
+
+pred_char <- cbind(geno_char, pheno_char)
+
+pred_char <- pred_char[,c("predictedB1","B1",
+                               "predictedB3","B3",
+                               "predictedB7","B7",
+                               "predictedB9","B9",
+                               "predictedB12","B12")]
+
+p1 <- p+ new_scale_fill()
+
+gheatmap(p1, pred_char, offset=0, width=1, font.size=2, 
+        colnames_angle=45, hjust=0,
+        colnames_position="top", legend_title="Function", colnames_offset_y = 0.1)+ 
+  scale_fill_manual(values=c("firebrick","peachpuff"),na.value="white")
+
+
+```
+Save image
+
+```{r}
+ggsave("figures/predictedvsactual.svg", device= "svg")
+
+```
+
+

@@ -1,0 +1,106 @@
+﻿Vitamin,Abbreviation,Function,EC,PubSEED
+Biotin,BioC,Pimelate,2.1.1.197,Biotin biosynthesis protein BioC
+Biotin,BioH,Pimelate,3.1.1.85,Biotin biosynthesis protein BioH
+Biotin,BioG,Pimelate,,Biotin biosynthesis protein BioG
+Biotin,BioW,Pimelate,6.2.1.14,Pimeloyl-CoA synthase (EC 6.2.1.14)
+Biotin,BioF,Bicyclic_rings,2.3.1.47,8-amino-7-oxononanoate synthase (EC 2.3.1.47)
+Biotin,BioA,Bicyclic_rings,2.6.1.62,Adenosylmethionine-8-amino-7-oxononanoate aminotransferase (EC 2.6.1.62)
+Biotin,BioD,Bicyclic_rings,6.3.3.3,Dethiobiotin synthetase (EC 6.3.3.3)
+Biotin,BioB,Bicyclic_rings,2.8.1.6,Biotin synthase (EC 2.8.1.6)
+Cobalamin,CbiKX,,4.99.1.3,Sirohydrochlorin cobaltochelatase CbiK (EC 4.99.1.3)
+Cobalamin,CbiKX,,4.99.1.4,Sirohydrochlorin ferrochelatase 
+Cobalamin,CbiKX,,4.99.1.3,Sirohydrochlorin cobaltochelatase (EC 4.99.1.3)
+Cobalamin,CbiKX,,4.99.1.3,Sirohydrochlorin cobaltochelatase CbiK (EC 4.99.1.3)
+Cobalamin,CbiKX,,4.99.1.3,Sirohydrochlorin cobaltochelatase CbiX small (EC 4.99.1.3)
+Cobalamin,CysG,,1.3.1.76,Siroheme synthase / Precorrin-2 oxidase (EC 1.3.1.76) 
+Cobalamin,CysG,,4.99.1.4,Sirohydrochlorin ferrochelatase (EC 4.99.1.4)
+Cobalamin,CysG,,2.1.1.107,Uroporphyrinogen-III methyltransferase (EC 2.1.1.107)
+Cobalamin,CbiL,,2.1.1.130,Cobalt-precorrin-2 C20-methyltransferase (EC 2.1.1.130)
+Cobalamin,CobG,,,Cobalamin biosynthesis protein CobG
+Cobalamin,CbiG,,2.1.1.131,Cobalt-precorrin-3b C17-methyltransferase
+Cobalamin,CbiG,,3.7.1.12,Cobalamin biosynthesis protein CbiG
+Cobalamin,CbiF,,2.1.1.133,Cobalt-precorrin-4 C11-methyltransferase (EC 2.1.1.133)
+Cobalamin,CbiD,,2.1.1.152,Precorrin-6A synthase (EC 2.1.1.152)
+Cobalamin,CbiD,,2.1.1.195,Cobalt-precorrin-5B C1-methyltransferase (EC 2.1.1.195)
+Cobalamin,CbiD,,,"Cobalt-precorrin-6 synthase, anaerobic"
+Cobalamin,CbiJ,,1.3.1.54,Cobalt-precorrin-6A reductase (EC 1.3.1.54)
+Cobalamin,CbiJ,,1.3.1.54,Cobalt-precorrin-6x reductase (EC 1.3.1.54)
+Cobalamin,CbiET,,2.1.1.289,Cobalt-precorrin-7 C5-methyltransferase (EC 2.1.1.289)
+Cobalamin,CbiET,,,Cobalt-precorrin-6y C5-methyltransferase (EC 2.1.1.-)
+Cobalamin,CbiET,,,Cobalt-precorrin-6y C15-methyltransferase [decarboxylating] (EC 2.1.1.-)
+Cobalamin,CbiET,,2.1.1.196,Cobalt-precorrin-6B C15-methyltransferase [decarboxylating] (EC 2.1.1.196)
+Cobalamin,CbiC,,5.4.1.2,Cobalt-precorrin-8x methylmutase (EC 5.4.1.2)
+Cobalamin,CbiC,,5.4.99.60,Cobalt-precorrin-8 methylmutase (EC 5.4.99.60)
+Cobalamin,CbiA,,6.3.5.11,"Cobyrinic acid a,c-diamide synthetase (EC 6.3.5.11)"
+Cobalamin,CbiA,,,"Cobyrinic acid A,C-diamide synthase"
+Cobalamin,CobNST,,6.6.1.2,Aerobic cobaltochelatase CobS subunit (EC 6.6.1.2)
+Cobalamin,CobNST,,6.6.1.2,Aerobic cobaltochelatase CobT subunit (EC 6.6.1.2)
+Cobalamin,CobNST,,6.6.1.2,CobN component of cobalt chelatase involved in B12 biosynthesis (EC 6.6.1.2)
+Cobalamin,CobNST,,,ChlD component of cobalt chelatase involved in B12 biosynthesis
+Cobalamin,CobNST,,,ChlI component of cobalt chelatase involved in B12 biosynthesis
+Cobalamin,CobNST,,,CobW GTPase involved in cobalt insertion for B12 biosynthesis
+Cobalamin,CobAT,,2.5.1.17,Cob(I)alamin adenosyltransferase (EC 2.5.1.17)
+Cobalamin,CobAT,,2.5.1.17,Cob(I)alamin adenosyltransferase PduO (EC 2.5.1.17)
+Cobalamin,CobAT,,2.5.1.17,ATP:Cob(I)alamin adenosyltransferase (EC 2.5.1.17)
+Cobalamin,CbiP,,6.3.5.10,Cobyric acid synthase (EC 6.3.5.10)
+Cobalamin,CbiB,,6.3.1.10,Adenosylcobinamide-phosphate synthase (EC 6.3.1.10)
+Cobalamin,CobU,,2.7.1.156,Adenosylcobinamide kinase (EC 2.7.1.156)
+Cobalamin,CobU,,2.7.7.62,Adenosylcobinamide-phosphate guanylyltransferase 
+Cobalamin,CobU,,2.7.7.62,Adenosylcobinamide-phosphate guanylyltransferase (EC 2.7.7.62)
+Cobalamin,CobU,,2.7.7.62,Predicted adenosylcobinamide-phosphate guanylyltransferase CobY (EC 2.7.7.62)
+Cobalamin,CobS,,2.7.8.26,Cobalamin synthase (EC 2.7.8.26)
+Cobalamin,CobS,,,Cobalamin synthase
+Cobalamin,CobT,,2.4.2.21,dimethylbenzimidazole phosphoribosyltransferase
+Folate,FolE,,3.5.4.16,GTP cyclohydrolase I type 1 (EC 3.5.4.16) 
+Folate,FolE,,3.5.4.16,GTP cyclohydrolase I type 2 (EC 3.5.4.16) 
+Folate,FolQ,,,Dihydroneopterin triphosphate pyrophosphohydrolase
+Folate,FolQ,,,Dihydroneopterin triphosphate pyrophosphohydrolase type 2
+Folate,FolQ,,,Putative DHNTP pyrophosphatase
+Folate,FolB,,4.1.2.25,Dihydroneopterin aldolase (EC 4.1.2.25)
+Folate,FolB,,,"Folate biosynthesis protein PTPS-III, catalyzes a reaction that bypasses dihydroneopterin aldolase FolB"
+Folate,FolK,,2.7.6.3,2-amino-4-hydroxy-6-hydroxymethyldihydropteridine pyrophosphokinase (EC 2.7.6.3)
+Folate,pabAa,,,Para-aminobenzoate synthase
+Folate,pabAb,,2.6.1.85,"Para-aminobenzoate synthase, amidotransferase component (EC 2.6.1.85)"
+Folate,pabAc,,4.1.3.38,Aminodeoxychorismate lyase (EC 4.1.3.38)
+Folate,FolP,,2.5.1.15,Dihydropteroate synthase (EC 2.5.1.15)
+Folate,FolP,,,Related to Dihydropteroate synthase
+Folate,DHFS,,6.3.2.12,Dihydrofolate synthase (EC 6.3.2.12)
+Folate,DHFR,,1.5.1.3,Dihydrofolate reductase (EC 1.5.1.3)
+Folate,DHFR,,,FolM Alternative dihydrofolate reductase 1
+Folate,DHFR,,,Alternative dihydrofolate reductase 2
+Folate,FPGS,,6.3.2.17,Folylpolyglutamate synthase (EC 6.3.2.17)
+Folate,FPGS,,,Alternative Folylglutamate Synthase
+Niacin,ASPOX,,1.4.3.16,L-aspartate oxidase (EC 1.4.3.16)
+Niacin,ASPOX,,1.4.1.21,L-Aspartate dehydrogenase (EC 1.4.1.21)
+Niacin,QSYN,,2.5.1.72,Quinolinate synthetase (EC 2.5.1.72)
+Niacin,QAPRT,,2.4.2.19,Quinolinate phosphoribosyltransferase [decarboxylating] (EC 2.4.2.19)
+Niacin,NaMNAT,,2.7.7.18,Nicotinate-nucleotide adenylyltransferase (EC 2.7.7.18)
+Niacin,NaMNAT,,2.7.7.18,"Nicotinate-nucleotide adenylyltransferase, eukaryotic PNAT family (EC 2.7.7.18)"
+Niacin,NaMNAT,,2.7.7.18,"Nicotinate-nucleotide adenylyltransferase, NadM family (EC 2.7.7.18)"
+Niacin,NADS,,6.3.5.1,NAD synthetase (glutamine-hydrolysing) (EC 6.3.5.1)
+Niacin,NADS,,6.3.1.5,NAD synthetase
+Niacin,NMNS,,,NMN synthetase (EC 6.3.1.-)
+Niacin,NMNAT,,2.7.7.1,Nicotinamide-nucleotide adenylyltransferase (EC 2.7.7.1)
+Niacin,NMNAT,,2.7.7.1,"Nicotinamide-nucleotide adenylyltransferase, NadR family (EC 2.7.7.1)"
+Niacin,NMNAT,,2.7.7.1,"Nicotinamide-nucleotide adenylyltransferase (EC 2.7.7.1), eukaryotic PNAT family"
+Niacin,NMNAT,,2.7.7.1,"Nicotinamide-nucleotide adenylyltransferase, NadM family (EC 2.7.7.1)"
+Niacin,NiaP,,,Niacin transporter NiaP
+Niacin,NiaP,,,Substrate-specific component NiaX of predicted niacin ECF transporter
+Niacin,NAM,,3.5.1.19,Nicotinamidase (EC 3.5.1.19)
+Niacin,NAPRT,,2.4.2.11,Nicotinate phosphoribosyltransferase (EC 2.4.2.11)
+Niacin,NMPRT,,2.4.2.12,Nicotinamide phosphoribosyltransferase (EC 2.4.2.12)
+Niacin,PnuC,,x.x.x.pnuC,"Ribosyl nicotinamide transporter, PnuC-like"
+Niacin,NadR,,2.7.1.22,Ribosylnicotinamide kinase (EC 2.7.1.22)
+Thiamine,ThiH,Thiazole,4.1.99.19,2-iminoacetate synthase (ThiH) (EC 4.1.99.19)
+Thiamine,ThiO,Thiazole,1.4.3.19,Glycine oxidase ThiO (EC 1.4.3.19)
+Thiamine,ThiG,Thiazole,2.8.1.10,Thiazole biosynthesis protein ThiG
+Thiamine,ThiS,Thiazole,x.x.x.thiS,Sulfur carrier protein ThiS
+Thiamine,ThiF,Thiazole,2.7.7.73,Sulfur carrier protein adenylyltransferase ThiF
+Thiamine,Thi4,Thiazole_eukaryotic,2.4.2.59,Thiazole biosynthetic enzyme Thi4
+Thiamine,ThiC,Pyrimidine,4.1.99.17,Hydroxymethylpyrimidine phosphate synthase ThiC (EC 4.1.99.17)
+Thiamine,ThiD,Pyrimidine,2.7.4.7,Hydroxymethylpyrimidine phosphate kinase ThiD (EC 2.7.4.7)
+Thiamine,ThiD,Pyrimidine,2.7.4.7,Hypothetical alternative hydroxymethylpyrimidine phosphate kinase ThiD (EC 2.7.4.7)
+Thiamine,ThiD,Pyrimidine,2.7.1.49,Hydroxymethylpyrimidine phosphate kinase ThiD (EC 2.7.1.49)
+Thiamine,ThiE,Coupling,2.5.1.3,Thiamin-phosphate pyrophosphorylase (EC 2.5.1.3)
+Thiamine,ThiE,Coupling,,YjbQ (alternate ThiE)
+Thiamine,ThiE,Coupling,2.5.1.3,Thiamin-phosphate pyrophosphorylase (EC 2.5.1.3) putative archaeal ThiN (predicted in PMID:12376536)

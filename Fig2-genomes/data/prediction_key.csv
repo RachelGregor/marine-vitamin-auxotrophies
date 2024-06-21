@@ -1,0 +1,5 @@
+type,genotype,phenotype,code
+match,auxo,auxo,0
+match,proto,proto,2
+mismatch,auxo,proto,-1
+mismatch,proto,auxo,1
