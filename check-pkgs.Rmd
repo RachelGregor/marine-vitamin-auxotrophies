@@ -1,0 +1,22 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This script will check what functions are actually being used in a file so you can remove unused packages. First, run the R file you want to analyze and load all the libraries listed. Then run this script. 
+
+```{r}
+
+#install.packages("NCmisc")
+
+library("NCmisc")
+
+##convert Rmd to R file
+knitr::purl("Fig1-isolates/Fig1c-screen.Rmd")
+
+
+##list functions
+list.functions.in.file("Fig1c-screen.R")
+
+```
+

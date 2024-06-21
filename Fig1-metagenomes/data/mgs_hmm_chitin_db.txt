@@ -1,0 +1,18 @@
+query_name	name	accession	type	length	description
+CHB_HEX_C_1	CHB_HEX_C_1	PF13290.7	Chitobiase	67	Chitobiase/beta-hexosaminidase C-terminal domain
+CHB_HEX_C	CHB_HEX_C	PF03174.14	Chitobiase	76	Chitobiase/beta-hexosaminidase C-terminal domain
+CHB_HEX	CHB_HEX	PF03173.14	Chitobiase	158	Putative carbohydrate binding domain
+Glucosamine_iso	Glucosamine_iso	PF01182.21	GlcNAc	225	Glucosamine-6-phosphate isomerases/6-phosphogluconolactonase
+Glyco_hydro_18	Glyco_hydro_18	PF00704.29	Chitinase	312	Glycosyl hydrolases family 18
+Glyco_hydro_19	Glyco_hydro_19	PF00182.20	Chitinase	232	Chitinase class I
+Glyco_hydro_20b	Glyco_hydro_20b	PF02838.16	Chitinase	124	"Glycosyl hydrolase family 20, domain 2"
+Glyco_hydro_20	Glyco_hydro_20	PF00728.23	Chitinase	354	"Glycosyl hydrolase family 20, catalytic domain"
+Glyco_hydro_36	Glyco_hydro_36	PF17167.5	Chitinase	423	"Glycosyl hydrolase 36 superfamily, catalytic domain"
+Glyco_hydro_3_C	Glyco_hydro_3_C	PF01915.23	Chitinase	204	Glycosyl hydrolase family 3 C-terminal domain
+Glyco_hydro_3	Glyco_hydro_3	PF00933.22	Chitinase	319	Glycosyl hydrolase family 3 N terminal domain
+Glyco_transf_36	Glyco_transf_36	PF06165.12	Chitinase	251	Glycosyltransferase family 36
+mcp_chitin_explicit_match_mafft_121720	MCP	mcp_chitin_explicit_match_mafft_121720	GlcNAc	541	methyl-accepting chemotaxis proteins (MCPs)
+nagk_swissprot_mafft_121720	nagK	nagk_swissprot_mafft_121720	GlcNAc	303	N-acetyl-D-glucosamine kinase
+TIGR00221	nagA	TIGR00221	GlcNAc	380	nagA: N-acetylglucosamine-6-phosphate deacetylase
+TIGR01998	nagE	TIGR01998	GlcNAc	475	"Transporter, PTS-II-BC-nag: PTS system, N-acetylglucosamine-specific IIBC component"
+tonb_chitin_explicit_match_mafft_121720	tonB	tonb_chitin_explicit_match_mafft_121720	Chitobiase	906	Transporter for chitin oligomers

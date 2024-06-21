@@ -1,0 +1,442 @@
+---
+title: "Metagenomes analysis"
+output: html_notebook
+---
+
+Set up
+```{r}
+
+rm(list=ls()) #clear workspace
+
+library(labdsv)
+library(tidyverse)
+library(reshape2)
+library(ggplot2)
+library(vegan)
+library(gplots)
+
+```
+
+Load metadata for all analyses
+```{r}
+metadata <- read.csv("data/sample-summary-timecourse-RG.csv", row.names = 1)
+
+##Two samples (B9 and C8) failed in the PhyloFlash pipeline repeatedly and were dropped from the analysis
+metadata <- subset(metadata, well_MiGS !=c("B9","C8"))
+```
+
+##Phyloflash - import
+
+Parsing the PhyloFlash output. The filename was added to each line. 
+
+```{r}
+
+file_list <- list.files(path = "data/mgs_phyloflash_data/abund",     # Identify all csv files in folder
+                       pattern = "*.csv", full.names = TRUE)
+  
+dataset = data.frame()
+for (file in file_list){
+    print(file)
+    temp = read.csv(file, header = F)
+    dataset = rbind(dataset,temp)
+}
+rm(temp)
+
+dataset <- dataset %>%
+  separate(V2, c("counts","sample"), sep=" ")%>%
+  separate("sample", c(NA,"well",NA), sep="[_-]")
+
+dim(dataset)
+
+length(unique(dataset$V1))
+
+length(unique(dataset$well))
+
+##reshape data with dcast
+counts.m <- dcast(dataset, V1~well, value.var= "counts")
+rm(dataset)
+
+#convert NA to 0
+counts.m[is.na(counts.m)] = 0
+
+##assign rownames 
+rownames(counts.m) <- counts.m$V1
+counts.m <- counts.m %>% select(-V1)
+
+##make dataframe numeric
+counts.m[] <- lapply(counts.m, as.numeric)
+
+##save output before normalization
+saveRDS(counts.m, "data_deriv/mgs_phyloflash-counts-absolute.RDS")
+```
+
+normalization of PhyloFlash output
+```{r}
+counts_absolute.m <- readRDS("data_deriv/mgs_phyloflash-counts-absolute.RDS")
+
+##sum of reads per sample
+totalreads <- colSums(counts_absolute.m)
+
+range(counts_absolute.m)
+
+#normalize
+counts.m <- sweep(counts_absolute.m,MARGIN=2,FUN="/",STATS=totalreads)
+
+range(counts.m)
+
+##convert to percentages
+counts.m <- counts.m*100
+
+counts.m <- t(counts.m)
+
+range(counts.m)
+
+rowSums(counts.m) ##should be 100 if it's correctly normalized
+
+#Clean up the data and add taxonomy 
+##Create new column names
+
+taxonomy <- as.data.frame(colnames(counts.m))
+taxonomy <- taxonomy %>% separate("colnames(counts.m)", c("Kingdom","Phylum","Class","Order","Family","Genus","Species"), sep =";", remove=F)
+
+taxonomy$names <- paste0(taxonomy$Order, "_", taxonomy$Family, "_", taxonomy$Genus, "_", taxonomy$Species)
+
+colnames(counts.m) <- taxonomy$names
+
+##Remove any hits to Eukaryotes
+taxonomy <- subset(taxonomy, Kingdom=="Bacteria")
+taxonomy <- subset(taxonomy, !Order=="Chloroplast")
+taxonomy <- subset(taxonomy, !Family=="Mitochondria")
+
+counts.m <-counts.m[,colnames(counts.m) %in% taxonomy$names]
+
+saveRDS(counts.m, "data_deriv/mgs_phyloflash-counts-bacterial.RDS")
+saveRDS(taxonomy, "data_deriv/mgs_phyloflash-counts-bacterial-taxonomy.RDS")
+```
+
+Subset for most abundant taxa: we focused only on the most abundant taxa (that reached at least 1% relative abundance in one timepoint), based on previous work:
+Datta, M., Sliwerska, E., Gore, J. et al. Microbial interactions lead to rapid micro-scale successions on model marine particles. Nat Commun 7, 11965 (2016). https://doi.org/10.1038/ncomms11965
+
+```{r}
+counts.m <- readRDS("data_deriv/mgs_phyloflash-counts-bacterial.RDS")
+taxonomy <- readRDS("data_deriv/mgs_phyloflash-counts-bacterial-taxonomy.RDS")
+
+#Use binary index to identify abundant taxa
+counts.binary <- counts.m 
+
+counts.binary[counts.binary < 1] <- 0
+counts.binary[counts.binary > 1] <- 1
+
+range(counts.binary)
+
+##Subset counts.m by the binary index. 
+##if the sum of any column (ie taxa) in counts.binary is greater than 0, it is more than 1% in at least one sample
+counts.m <-counts.m[,colSums(counts.binary[])>0]
+
+rm(counts.binary)
+
+#Sort data by the two treatment conditions based on the metadata.
+counts.m <- counts.m[match(metadata$well_MiGS,rownames(counts.m)),]
+
+
+#Subset taxonomy to match most abundant taxa list
+
+taxonomy <- taxonomy[match(colnames(counts.m), taxonomy$names),]
+
+##replace "Oceanospirillales" and "Cellvibrionales" with Pseudomonadales based on updated nomenclature
+taxonomy$Order_updated <- taxonomy$Order
+taxonomy$Order_updated <- taxonomy$Order_updated %>% str_replace_all("Oceanospirillales", "Pseudomonadales")
+
+taxonomy$Order_updated <- taxonomy$Order_updated %>% str_replace_all("Cellvibrionales", "Pseudomonadales")
+
+saveRDS(counts.m, "data_deriv/mgs_phyloflash-counts-top1perc.RDS")
+saveRDS(taxonomy, "data_deriv/mgs_phyloflash-taxonomy-top1perc.RDS")
+
+```
+
+
+##Fig. 1a- Bar plot of enriched taxa per order
+
+```{r}
+#import data
+counts.m <- readRDS("data_deriv/mgs_phyloflash-counts-top1perc.RDS")
+taxonomy <- readRDS("data_deriv/mgs_phyloflash-taxonomy-top1perc.RDS")
+
+counts.ctrl <- counts.m[1:17,]
+counts.vit <- counts.m[18:34,]
+
+##sum across each condition to make a combined sample
+
+##check that the order matches
+match(colnames(counts.ctrl), taxonomy$names)
+
+unique(taxonomy$Order_updated)
+
+taxonomy %>% count(Order_updated, sort=T)
+
+##Label some taxa as "Other" based on Datta 2016
+
+other <- c("SAR86 clade","SAR11 clade","(Bacteria)", "(Bacteroidia)", "(Gammaproteobacteria)", "(Proteobacteria)","Burkholderiales","Cytophagales","Legionellales","Thiomicrospirales")
+
+taxonomy$Order_simple <- taxonomy$Order_updated
+
+##Add the col index in the y position to put "Other" only in the simple column.
+taxonomy[taxonomy$Order_simple %in% other,"Order_simple"] <- "Other"
+
+taxonomy$Order_simple <- factor(taxonomy$Order_simple)
+
+taxonomy$Order_simple
+
+##Calculate the average relative abundance per conditon
+taxonomy$Control <- colSums(counts.ctrl)/nrow(counts.ctrl)
+taxonomy$Vitamins <- colSums(counts.vit)/nrow(counts.vit)
+
+```
+Plot as log ratio
+```{r}
+
+taxonomy$log_ratio <- log10(taxonomy$Control/taxonomy$Vitamin)
+
+summary_sums <- taxonomy %>%
+  group_by(Order_simple) %>%
+  summarise(across(c("log_ratio"), mean))
+
+summary_sums <-summary_sums[order(summary_sums$log_ratio,decreasing=T),]
+
+summary_sums$Order_simple <- factor(summary_sums$Order_simple,levels=summary_sums$Order_simple)
+
+summary_sums <-na.omit(summary_sums)
+
+##Overlay with all datapoints. Order it in the same order as the summary sums dataframe
+taxonomy$Order_simple <- factor(taxonomy$Order_simple,levels=summary_sums$Order_simple)
+
+##add shapes based on taxa enriched in each condition
+
+taxonomy$enriched <- taxonomy$log_ratio >0
+
+ggplot()+
+  geom_bar(data=summary_sums, aes(x=Order_simple,y=log_ratio),stat="identity",fill="grey",position=position_dodge())+
+  geom_point(data=taxonomy, aes(x = Order_simple, y=log_ratio, shape=enriched), alpha=0.6,size=2)+
+  scale_shape_manual(values=c(17,16))+
+  theme_bw()+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + 
+  ylab("") + xlab("Relative abundance with added vitamins/relative abundance without (log scale)")
+
+ggsave("figures/rel-abund-bar-plot-1A.svg",device="svg", height=4, width=4)     
+                                  
+```
+
+##Fig. S1- Heatmap
+Visualize data as heatmap over time (Fig. S1)
+```{r}
+#load data
+counts.m <- readRDS("data_deriv/mgs_phyloflash-counts-top1perc.RDS")
+taxonomy <- readRDS("data_deriv/mgs_phyloflash-taxonomy-top1perc.RDS")
+
+#For visualization, sort the taxa so that the maximum abundance matches the order of the timepoints
+
+order.taxa <- as.data.frame(colnames(counts.m))
+
+##Print the well in which the abundance of each taxon peaks
+order.taxa$max <- colnames(t(counts.m))[max.col(t(counts.m), ties.method = "first")]
+
+#Also print the maximal value to help sort within samples
+order.taxa$max_val <-apply(counts.m[, 1:ncol(counts.m)], 2, max)
+
+order.taxa <- cbind(order.taxa,metadata[match(order.taxa$max,metadata$well_MiGS),])
+
+#arrange by desc(max_val) to organize the numeric values in descending order
+order.taxa <- order.taxa %>% arrange(timepoint, type,desc(max_val))
+
+counts.m <- counts.m[,match(rev(order.taxa$`colnames(counts.m)`),colnames(counts.m))]
+
+#Visualize heatmap
+heatmap(t(counts.m), Colv=NA, Rowv=NA, main="Seawater (left) and seawater with vitamins (right)", labCol=metadata$time_hrs)
+
+```
+Show mean value for duplicates at each timepoint
+
+```{r}
+##calculate the mean for each two timepoints
+
+##first add in metadata
+merged <- cbind(metadata,counts.m)
+
+range(counts.m)
+
+merged <- melt(merged, id.vars = colnames(metadata))
+
+##calculate mean
+merged <- merged %>% group_by(type, time_hrs, variable) %>%
+  summarize_at(vars(value), list(name = mean))
+
+merged$ave_sample <- paste0(merged$time_hrs,"_",merged$type)
+
+counts.average <- dcast(merged, variable~ave_sample, value.var = "name")
+
+#clean up rownames
+rownames(counts.average) <- counts.average[,1]
+counts.average <- counts.average[,-1]
+
+#make numeric and matrix
+counts.average[] <- lapply(counts.average, as.numeric)
+
+counts.average <- as.matrix(counts.average)
+
+class(counts.average)
+
+#manually set sample order based on time and group
+sample_order <- c("16_ctrl", "28_ctrl", "40_ctrl", "52_ctrl", "64_ctrl", "76_ctrl", "88_ctrl","100_ctrl","124_ctrl","16_vit", "28_vit", "40_vit", "52_vit", "64_vit", "76_vit", "88_vit","100_vit","124_vit")
+
+##ensure that the two lists have no differences before matching
+setdiff(sample_order, colnames(counts.average))
+setdiff(colnames(counts.average), sample_order)
+
+counts.average <- counts.average[,match(sample_order, colnames(counts.average))]
+
+##since data will be normalized per taxon below, we will sort by timepoint and order this time
+order.taxa <- merge(order.taxa, taxonomy, by.x="colnames(counts.m)", by.y="names")
+order.taxa <- order.taxa %>% arrange(timepoint,Order)
+
+counts.average <- counts.average[match(rev(order.taxa$`colnames(counts.m)`),rownames(counts.average)),]
+
+
+#Visualize heatmap
+heatmap(counts.average, Colv=NA, Rowv=NA, main="Seawater (left) and seawater with vitamins (right)")
+
+```
+
+Normalize each individual trajectory to its maximum value (as in Datta 2016).
+```{r}
+#normalize by max value in each column (check orientation of your table)
+counts.average <- t(counts.average)
+counts.average.norm <- sweep(counts.average,MARGIN=2,STATS=apply(counts.average, 2, max),FUN="/")
+counts.average.norm <- t(counts.average.norm)
+
+#reverse order for correct visualization using heatmap.2
+counts.average.norm <- counts.average.norm[nrow(counts.average.norm):1, ]
+
+heatMapCols <- colorRampPalette(c("black", "darkorange", "red"),bias=1.5)(599)
+
+heatmap.2(counts.average.norm, Colv=NA, Rowv=NA, dendrogram = "none", col=heatMapCols, trace="none", cexRow = 0.8, 
+          density.info = "none",
+          margins=c(5,10),
+          scale="none",
+          colsep=NULL,rowsep=NULL,
+          labRow = order.taxa$Order
+          #labCol = c("16","28","40","52","64","76","88","100","124","16","28","40","52","64","76","88","100","124")
+          )
+
+```
+
+##Fig S1- beta diversity
+
+Beta diversity as PCoA plot
+```{r}
+
+#load full dataframe
+counts.m <- readRDS("data_deriv/mgs_phyloflash-counts-bacterial.RDS") ##full dataframe
+
+##remove first column which is just "bacteria"
+counts.m <- counts.m[,-1]
+
+##match the order of the metadata to the data
+metadata <- metadata[match(rownames(counts.m),metadata$well_MiGS),]
+
+dim(counts.m)
+
+#Calculate Bray Curtis distances
+counts_dist <- vegdist(counts.m)
+counts_pcoa <- pco(counts_dist, k = 2)
+
+#Normalize axis by eigenvalues
+
+eig_bray <- eigenvals(counts_pcoa)
+exp_var_bray <- eig_bray / sum(eig_bray)
+exp_var_bray_2 <- round(((exp_var_bray[1:2])*100),2)
+
+metadata$dim1.pcoa.bray <- counts_pcoa$points[, 1]
+metadata$dim2.pcoa.bray <- counts_pcoa$points[, 2]
+
+
+#Plot PCoA
+
+ggplot(metadata, aes(x=dim1.pcoa.bray, y=dim2.pcoa.bray, shape = type, color = time_hrs)) + geom_point(size=3) + 
+labs(shape= "Treatment", color = "Time (hours)", y=paste("PC2 (",exp_var_bray_2[2], " %)", sep = ""), x= paste("PC1 (",exp_var_bray_2[1], " %)", sep = ""), title="Time Course PCoA (Bray-Curtis)") +
+    theme_bw()+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+ 
+
+```
+
+
+##Fig 1b- Chitinase abundance over time
+Reads were mapped to chitinase genes using hmmer and a custom database of profile hidden Markov models of proteins involved in growth on chitin. The output was filtered for iEval < 1e-9, score > 30. 
+
+Based on: Szabo, R. E. et al. Historical contingencies and phage induction diversify bacterioplankton communities at the microscale. Proc. Natl. Acad. Sci. U. S. A. 119, e2117748119 (2022).
+
+
+
+```{r}
+##Import filtered output of hmmer
+hmm <- read.table("data/mgs_hmm_filteredChitinases.txt")
+
+##cast it and order to match metadata
+hmm.m <- dcast(hmm, query_name ~ sample, fun.aggregate = length)
+
+rownames(hmm.m) <- hmm.m[,1]
+
+hmm.m <- hmm.m[,-1]
+
+hmm.m <- hmm.m[,match(metadata$well_MiGS, colnames(hmm.m))]
+
+hmm_metadata <- hmm_metadata[match(rownames(hmm.m),hmm_metadata$query_name),]
+
+rownames(hmm.m) <- hmm_metadata$name
+
+##normalize based on the reads per sample
+hmm.m <- sweep(hmm.m, 2, as.numeric(metadata$trimmed_reads), "/")
+
+hmm.m <- hmm.m*100
+
+
+```
+
+Generate line graph 
+
+```{r}
+meta_hmm <- cbind(metadata, t(hmm.m))
+
+meta_hmm <- melt(meta_hmm, measure.vars = rownames(hmm.m))
+
+meta_hmm<- cbind(meta_hmm, "PFAM_class" = hmm_metadata[match(meta_hmm$variable,hmm_metadata$name),]$type)
+
+colnames(meta_hmm)
+
+meta_hmm <- subset(meta_hmm, variable!="nagE")		
+	
+meta_hmm <- subset(meta_hmm, variable!="nagA")		
+		
+meta_hmm <- subset(meta_hmm, variable!="nagK")
+
+
+##going to aggregate again, but this time collapse all together
+hmm_agg <-meta_hmm %>%
+ group_by(type,migs_name, time_hrs)%>%
+  summarise(reads_norm=sum(value))
+
+colnames(hmm_agg)
+
+colnames(hmm_agg) <- c("type","migs_name","hours","reads_norm")
+
+ggplot(hmm_agg, aes(x=hours, y=reads_norm, color=type, shape=type, group=type)) +
+  scale_color_manual(values=c("#fb9a99", "#1f78b4"))+
+  geom_point(size=3)+
+  stat_summary(geom = "line", fun = mean)+
+  labs(y="Percent reads per sample", x= "Time (hours)", title=paste0("Chitin degrading PFAMs")) +
+  theme_bw()+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+

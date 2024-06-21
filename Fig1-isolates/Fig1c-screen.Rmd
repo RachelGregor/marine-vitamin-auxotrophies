@@ -1,0 +1,232 @@
+---
+title: "Vitamins"
+output: html_notebook
+---
+
+Setup
+
+```{r}
+rm(list=ls()) #clear workspace
+
+
+library(tidyverse)
+library(reshape2)
+library(ggplot2)
+library(ggtree)
+library(ggtreeExtra)
+library(ggnewscale)
+
+```
+
+
+
+##Vitamin auxotrophy screen
+
+Load data
+```{r}
+data <- readRDS("data/2021-02-time_course.rds")
+
+#We focused on 72 hour timepoint. Remove the two later timepoints, and two preculture timepoints 
+
+data <- data %>% subset(!timept=="120hrs") %>% 
+  subset(!timept=="96hrs") %>% 
+  subset(!timept=="preculture48hr") %>% 
+  subset(!timept=="preculture24hr")
+```
+
+Generate a single value to represent sensitivity:
+
+median(with-vit OD)-median(without-vit OD)/(with-vit OD + without-vit OD)
+
+```{r}
+
+data_subset <- subset(data, timept== "72hrs")
+
+#Summarize based on median OD values
+
+dataSummary <- data_subset %>%
+  group_by(vit, strains) %>%
+  summarize(median= median(value, na.rm=TRUE), min = min(value), max= max(value), IQR =IQR(value))
+
+colnames(dataSummary)
+
+##cast 
+data_simple <- dcast(dataSummary, strains~vit, value.var = "median")
+
+rownames(data_simple) <- data_simple$strains
+data_simple <- data_simple[2:3]
+
+#Normalize and calculate the difference between median growth with and without vitamins
+data_simple <- data_simple/rowSums(data_simple)
+data_simple$diff <- data_simple$minus-data_simple$plus
+
+```
+
+Fig. S2. Visualize distribution of values to find appropriate cutoff. 
+```{r}
+hist(as.matrix(data_simple$diff), breaks=40, main=paste("Change in growth with and without vitamins"), xlab=paste("Δ growth (norm.)"))
+
+##choose cut off of 0.4
+
+##These 52 isolates were selected for further screening to verify auxotrophies
+sensitive <- subset(data_simple, diff < -0.4)
+
+```
+
+##Results of growth assays to verify auxotrophies 
+Growth of each suspected auxotroph with and without each vitamin individually. 
+
+```{r}
+
+panel <- readRDS("data/vitpanels_batch5678_screen.rds")
+##simplify your life and only take the second timepoint for visualization
+#data_full <- data
+
+
+panel <- panel %>% 
+  separate(vitamin, c("vitamin_simple",NA), remove=F)
+
+panel <- subset(panel, timept=="72hrs")
+
+#Example of panel data: A2R20, as in Fig 1c
+
+panel_subset <- panel %>% subset(strains=="A2R20")
+  
+ggplot(panel_subset, aes(x=vitamin, y=value, color=type)) +
+  facet_wrap(strains~., ncol=4, scales= "fixed")+
+  theme_bw(base_size = 15) + 
+  stat_summary(fun = median,
+                 geom = "crossbar", width = 0.8)+
+  geom_point(shape=21, size=1, fill="white")+
+  labs(x= "", y="OD 600")+
+  scale_color_manual(values=c("#fb9a99", "#1f78b4"))+
+  theme(axis.text.x = element_text(angle = 90, hjust=1))+
+  ggtitle("")+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
+  theme(strip.background =element_rect(fill="white",linewidth=0))
+
+
+```
+
+##Fig. 1c inset
+
+Combine data from screen and for B1 from panel for Fig. 1c inset. 
+```{r}
+
+data_A2R20 <- panel %>% 
+    subset(strains=="A2R20") %>%
+    subset(vitamin_simple=="B1") %>%
+  subset(vitamin !="B1_thi-pyro")
+
+##remove the B1_thi knockout
+data_A2R20_added <- data_A2R20 %>% subset(vitamin =="B1_thiamine" & type=="added") %>%
+  subset(select=c("strains","timept","type","value"))
+
+data_A2R20_out <- data_A2R20 %>% subset(vitamin =="B1_both") %>%
+  subset(select=c("strains","timept","type","value"))
+
+data_A2R20_added$condition <- "B1 added"
+data_A2R20_out$condition <- "B1 removed"
+
+data_subset <- subset(data, strains=="A2R20")
+
+data_subset <- subset(data_subset, select=c("strains","timept","vit","value"))
+
+colnames(data_subset) <- c("strains", "timept", "type", "value")
+
+data_subset$condition <- data_subset$timept
+
+data_A2R20 <- rbind(data_subset,data_A2R20_added, data_A2R20_out)
+
+
+ggplot(data_A2R20, aes(y=value, x=condition, color=type)) +
+  facet_wrap(strains~., scales="fixed", ncol=4)+
+  theme_bw(base_size = 10) + 
+  stat_summary(fun = median,
+                 geom = "crossbar", width = 0.8)+
+  geom_point(shape=21, size=1, fill="white")+
+  labs(x= "OD 600", y="")+
+  scale_color_manual(values=c("black", "black","#fb9a99", "#1f78b4"))+
+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
+  theme(strip.background =element_rect(fill="white",linewidth=0))
+
+ggsave("figures/A2R20.svg", device="svg", width=4, height=2)
+
+```
+
+##Visualize phylogenetic tree- Fig 1c
+
+
+```{r}
+#Results of panel summarized in metadata file
+metadata_sensitive <- as.data.frame(read.csv("data/metadata_sensitive_strains.csv"))
+
+##import phylogenetic tree
+tree <- read.tree("data/prunedGenomes.tree")
+
+# import phylogeny of full isolate collection
+phylo <- read.csv("data/taxonomy-151strains.csv", row.names = 1)
+
+##For visualization, melt auxotrophies
+sens.melt <- melt(metadata_sensitive,measure.vars = c("auxo_1", "auxo_2", "auxo_3", "auxo_4"))
+
+sens.melt <-sens.melt[!sens.melt$value=="", ]
+
+```
+
+
+
+Visualize tree with auxotrophies
+
+```{r}
+
+colors <- c("#80C87F", #altero
+            "brown", #bacill
+            "orange", #cyto
+             "#FEFE99", #flavo
+            "darkgreen", #gran
+             "#5CB7FF", #pseudo
+              "#FFCFFD", #rhodo
+              "#BEADD4") #vibrio
+
+##first make the tree skeleton
+p <- ggtree(tree) 
+
+p1 <- p + 
+      geom_tiplab(
+        size=2.5) +
+      geom_fruit(
+          data=phylo,
+          geom=geom_point,
+          mapping=aes(y=taxa, color=order),
+          position="identity"
+          ) +   scale_color_manual(values = colors)
+
+
+p2 <- p1+
+  new_scale_fill() +
+   geom_fruit(
+          data=sens.melt,
+          geom=geom_tile,
+          mapping=aes(y=strains, x=value, fill=value),
+          offset=0.07,   # The distance between layers, default is 0.03 of x range of tree.
+          pwidth=0.15
+          ) 
+p2
+
+
+```
+save image
+
+```{r}
+ggsave("figures/tree-screen-heatmap.svg", p2, svg, scale=2, height=5)
+```
+
+
+
+
+
+
+
+
+
